@@ -1,0 +1,9 @@
+# Copyright 2020 VMware, Inc.
+
+---
+apiVersion: static.acp.local/v1alpha1
+kind: LatestImage
+metadata:
+  name: spring-demo
+spec:
+  latestImage: hnandiwada/spring-demo

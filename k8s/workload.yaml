@@ -1,0 +1,30 @@
+# Copyright 2020 VMware, Inc.
+
+---
+apiVersion: knative.acp.local/v1alpha1
+kind: ServiceFactory
+metadata:
+  name: spring-demo
+  labels:
+    app: spring-demo
+spec:
+  imageRefs:
+  - apiVersion: static.acp.local/v1alpha1
+    kind: LatestImage
+    name: spring-demo
+    container: workload
+  template:
+    metadata:
+      labels:
+        app: spring-demo
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "1"
+    spec:
+      containers:
+      - name: workload
+        image: hnandiwada/spring-demo
+        imagePullPolicy: IfNotPresent
+        command: ["/layers/paketo-buildpacks_bellsoft-liberica/jre/bin/java"]
+        args: ["-cp", "/workspace/BOOT-INF/classes/:/workspace/BOOT-INF/lib/*", "com.example.springboot.Application"]
+
